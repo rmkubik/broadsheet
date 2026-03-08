@@ -1,0 +1,27 @@
+services:
+  broadsheet:
+    # image: node:24
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@db/broadsheet
+      - NODE_ENV=production
+    build: .
+    # volumes:
+    # /volume1/docker/services/broadsheet/broadsheet is path on NAS
+    # - $ROOT_VOLUME/broadsheet:/app
+  db:
+    image: postgres:18
+    restart: always
+    environment:
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - POSTGRES_DB=broadsheet
+    volumes:
+      # /volume1/docker/services/broadsheet/database is path on NAS
+      # I'm not sure why/if you need the second part, but I copied it
+      # from my miniflux compose file.
+      - $ROOT_VOLUME/database:/var/lib/postgresql
