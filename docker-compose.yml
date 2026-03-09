@@ -20,6 +20,8 @@ services:
       - POSTGRES_USER=$POSTGRES_USER
       - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
       - POSTGRES_DB=broadsheet
+    ports:
+      - "5432:5432"
     volumes:
       # /volume1/docker/services/broadsheet/database is path on NAS
       # I'm not sure why/if you need the second part, but I copied it

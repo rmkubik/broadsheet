@@ -1,0 +1,15 @@
+{
+  "sqltools.connections": [
+    {
+      "ssh": "Disabled",
+      "previewLimit": 50,
+      "server": "localhost",
+      "driver": "PostgreSQL",
+      "name": "broadsheet-db",
+      "database": "broadsheet",
+      "username": "pgUser",
+      "password": "pgPw",
+      "connectString": "postgres://pgUser:pgPw@localhost:5432/broadsheet"
+    }
+  ]
+}

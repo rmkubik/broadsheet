@@ -5,19 +5,27 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "ts-node src/backend/index.ts",
-    "dev": "",
-    "dev:frontend": "ts",
-    "dev:backend": ""
+    "start": "tsx src/backend/index.ts",
+    "dev": "concurrently npm:dev:*",
+    "dev:frontend": "vite build --watch src/frontend",
+    "dev:backend": "concurrently npm:dev:backend:*",
+    "dev:backend:app": "tsx watch src/backend/index.ts",
+    "dev:backend:db": "docker compose up db",
+    "build": "concurrently npm:build:*",
+    "build:frontend": "vite build src/frontend",
+    "build:backend": ""
   },
   "author": "rmkubik",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
     "drizzle-orm": "^0.45.1",
     "express": "^5.2.1",
     "pg": "^8.20.0",
-    "ts-node": "^10.9.2",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tsx": "^4.21.0",
     "uuid": "^13.0.0",
     "zod": "^4.3.6"
   },
@@ -25,7 +33,10 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/pg": "^8.18.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "concurrently": "^9.2.1",
-    "drizzle-kit": "^0.31.9"
+    "drizzle-kit": "^0.31.9",
+    "vite": "^7.3.1"
   }
 }
