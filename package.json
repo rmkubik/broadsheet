@@ -13,13 +13,17 @@
     "dev:backend:db": "docker compose up db",
     "build": "concurrently npm:build:*",
     "build:frontend": "vite build src/frontend",
-    "build:backend": ""
+    "build:backend": "",
+    "db:push": "drizzle-kit push",
+    "db:migration:generate": "drizzle-kit generate",
+    "db:migration:apply": "drizzle-kit migrate"
   },
   "author": "rmkubik",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
+    "dotenv-expand": "^12.0.3",
     "drizzle-orm": "^0.45.1",
     "express": "^5.2.1",
     "pg": "^8.20.0",

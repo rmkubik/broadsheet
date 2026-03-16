@@ -14,7 +14,7 @@ export const user = table(
     // invitee: t.integer().references((): AnyPgColumn => users.id),
     role: rolesEnum().default("guest"),
   },
-  (table) => [t.uniqueIndex("email_idx").on(table.email)],
+  (table) => [t.uniqueIndex("user_email_idx").on(table.email)],
 );
 
 export const feed = table(
@@ -25,7 +25,7 @@ export const feed = table(
     url: t.varchar().notNull(),
     name: t.varchar(),
   },
-  (table) => [t.uniqueIndex("owner_id_idx").on(table.ownerId)],
+  (table) => [t.uniqueIndex("feed_owner_id_idx").on(table.ownerId)],
 );
 
 export const post = table(
@@ -36,7 +36,7 @@ export const post = table(
     url: t.varchar().notNull(),
     title: t.varchar(),
   },
-  (table) => [t.uniqueIndex("feed_id_idx").on(table.feedId)],
+  (table) => [t.uniqueIndex("post_feed_id_idx").on(table.feedId)],
 );
 
 export const postPlacement = table(
@@ -45,7 +45,7 @@ export const postPlacement = table(
     id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
     postId: t.integer().references(() => post.id),
   },
-  (table) => [t.uniqueIndex("post_id_idx").on(table.postId)],
+  (table) => [t.uniqueIndex("postPlacement_post_id_idx").on(table.postId)],
 );
 
 export const broadsheetGenerationRules = table(
@@ -54,7 +54,9 @@ export const broadsheetGenerationRules = table(
     id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
     ownerId: t.integer("owner_id").references(() => user.id),
   },
-  (table) => [t.uniqueIndex("owner_id_idx").on(table.ownerId)],
+  (table) => [
+    t.uniqueIndex("broadsheetGenerationRules_owner_id_idx").on(table.ownerId),
+  ],
 );
 
 export const broadsheetGenerationSchedule = table(
@@ -66,7 +68,9 @@ export const broadsheetGenerationSchedule = table(
       .references(() => broadsheetGenerationRules.id),
   },
   (table) => [
-    t.uniqueIndex("generation_rule_id_idx").on(table.generationRuleId),
+    t
+      .uniqueIndex("broadsheetGenerationSchedule_generation_rule_id_idx")
+      .on(table.generationRuleId),
   ],
 );
 
@@ -79,6 +83,8 @@ export const broadsheet = table(
       .references(() => broadsheetGenerationRules.id),
   },
   (table) => [
-    t.uniqueIndex("generation_rule_id_idx").on(table.generationRuleId),
+    t
+      .uniqueIndex("broadsheet_generation_rule_id_idx")
+      .on(table.generationRuleId),
   ],
 );
