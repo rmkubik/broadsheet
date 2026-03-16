@@ -16,8 +16,12 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 app.get("/api/v1/users", async (req, res) => {
-  const users = await db.select().from(user);
-  res.json({ users });
+  try {
+    const users = await db.select().from(user);
+    res.json({ users });
+  } catch (error) {
+    res.json({ error });
+  }
 });
 
 // Catch-all for SPA router (not sure I want this)

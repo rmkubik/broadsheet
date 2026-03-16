@@ -5,7 +5,9 @@ import * as t from "drizzle-orm/pg-core";
 export const rolesEnum = pgEnum("roles", ["guest", "user", "admin"]);
 
 export const user = table(
-  "user",
+  // We use "account" instead of "user" because user is reserved
+  // in postgres.
+  "account",
   {
     id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
     // firstName: t.varchar("first_name", { length: 256 }),
@@ -14,7 +16,7 @@ export const user = table(
     // invitee: t.integer().references((): AnyPgColumn => users.id),
     role: rolesEnum().default("guest"),
   },
-  (table) => [t.uniqueIndex("user_email_idx").on(table.email)],
+  (table) => [t.uniqueIndex("account_email_idx").on(table.email)],
 );
 
 export const feed = table(
