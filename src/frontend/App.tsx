@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { api } from "./api";
+import { CreateUserForm } from "./user/CreateUserForm";
 
 export function App() {
   const [users, setUsers] = useState<any>([]);
@@ -17,6 +18,7 @@ export function App() {
   return (
     <div>
       <pre>{JSON.stringify(users, undefined, 2)}</pre>
+      <CreateUserForm />
     </div>
   );
 }

@@ -22,8 +22,6 @@ export const apiRouter = router({
         const { input } = opts;
 
         await db.insert(user).values(input);
-
-        return user;
       }),
   },
 });
