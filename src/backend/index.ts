@@ -5,6 +5,7 @@ import * as trpcExpress from "@trpc/server/adapters/express";
 import { db } from "./database/db";
 import { user } from "./database/schema";
 import { apiRouter } from "./api/apiRouter";
+import { apiPath } from "./api/apiPath";
 
 const __dirname = import.meta.dirname;
 
@@ -19,7 +20,7 @@ const createContext = ({
 type Context = Awaited<ReturnType<typeof createContext>>;
 
 app.use(
-  "/api/v1",
+  apiPath,
   trpcExpress.createExpressMiddleware({
     router: apiRouter,
     createContext,

@@ -8,5 +8,6 @@ export const env = z
   .object({
     DATABASE_URL: z.string(),
     NODE_ENV: z.enum(["dev", "prod", "test"]),
+    BASE_URL: z.string(),
   })
   .parse(process.env);
