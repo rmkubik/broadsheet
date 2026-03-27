@@ -1,5 +1,4 @@
 import { useForm } from "@tanstack/react-form";
-import { api } from "../api";
 import { FieldInfo } from "../form/FieldInfo";
 import { signUp } from "../../lib/auth-client";
 import { useState } from "react";
@@ -22,8 +21,6 @@ export function CreateUserForm() {
       }
 
       setSubmissionError(null);
-
-      // api.user.create.mutate({ name: value.name, email: value.email });
     },
   });
 
@@ -96,7 +93,7 @@ export function CreateUserForm() {
         children={([canSubmit, isSubmitting]) => (
           <>
             <button type="submit" disabled={!canSubmit}>
-              {isSubmitting ? "..." : "Submit"}
+              {isSubmitting ? "..." : "Register"}
             </button>
             {/* <button
               type="reset"
