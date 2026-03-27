@@ -8,7 +8,6 @@ export function App() {
   useEffect(() => {
     async function fetchData() {
       const newUsers = await api.user.list.query();
-
       setUsers(newUsers);
     }
 

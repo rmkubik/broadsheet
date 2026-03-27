@@ -1,29 +1,30 @@
 import { AnyPgColumn } from "drizzle-orm/pg-core";
 import { pgEnum, pgTable as table } from "drizzle-orm/pg-core";
 import * as t from "drizzle-orm/pg-core";
+import { user } from "./auth-schema";
 
 export const rolesEnum = pgEnum("roles", ["guest", "user", "admin"]);
 
-export const user = table(
-  // We use "account" instead of "user" because user is reserved
-  // in postgres.
-  "account",
-  {
-    id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
-    // firstName: t.varchar("first_name", { length: 256 }),
-    // lastName: t.varchar("last_name", { length: 256 }),
-    email: t.varchar().notNull(),
-    // invitee: t.integer().references((): AnyPgColumn => users.id),
-    role: rolesEnum().default("guest"),
-  },
-  (table) => [t.uniqueIndex("account_email_idx").on(table.email)],
-);
+// export const user = table(
+//   // We use "account" instead of "user" because user is reserved
+//   // in postgres.
+//   "account",
+//   {
+//     id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
+//     // firstName: t.varchar("first_name", { length: 256 }),
+//     // lastName: t.varchar("last_name", { length: 256 }),
+//     email: t.varchar().notNull(),
+//     // invitee: t.integer().references((): AnyPgColumn => users.id),
+//     role: rolesEnum().default("guest"),
+//   },
+//   (table) => [t.uniqueIndex("account_email_idx").on(table.email)],
+// );
 
 export const feed = table(
   "feed",
   {
     id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
-    ownerId: t.integer("owner_id").references(() => user.id),
+    ownerId: t.text("owner_id").references(() => user.id),
     url: t.varchar().notNull(),
     name: t.varchar(),
   },
@@ -54,7 +55,7 @@ export const broadsheetGenerationRules = table(
   "broadsheetGenerationRules",
   {
     id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
-    ownerId: t.integer("owner_id").references(() => user.id),
+    ownerId: t.text("owner_id").references(() => user.id),
   },
   (table) => [
     t.uniqueIndex("broadsheetGenerationRules_owner_id_idx").on(table.ownerId),

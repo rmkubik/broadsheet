@@ -8,9 +8,10 @@
     "sourceMap": true,
     "baseUrl": ".",
     "outDir": "dist",
-    "moduleResolution": "node",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "jsx": "react-jsx",
-    "lib": ["es2017", "dom"]
+    "lib": ["esnext", "dom"]
   }
 }
