@@ -27,7 +27,7 @@ export const auth = betterAuth({
     user: {
       create: {
         after: async (user) => {
-          db.insert(userRole).values({ role: "user", ownerId: user.id });
+          await db.insert(userRole).values({ role: "user", ownerId: user.id });
         },
       },
     },
