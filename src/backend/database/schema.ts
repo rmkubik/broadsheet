@@ -4,6 +4,7 @@ import * as t from "drizzle-orm/pg-core";
 import { user } from "./auth-schema";
 
 export const rolesEnum = pgEnum("roles", ["guest", "user", "admin"]);
+export type Role = (typeof rolesEnum.enumValues)[number];
 
 // export const user = table(
 //   // We use "account" instead of "user" because user is reserved
@@ -19,6 +20,28 @@ export const rolesEnum = pgEnum("roles", ["guest", "user", "admin"]);
 //   },
 //   (table) => [t.uniqueIndex("account_email_idx").on(table.email)],
 // );
+
+/**
+ * TODO:
+ * With better-auth, how do I create this record when a new user is created
+ * via that library?
+ *
+ * How do I include this value on the session/user information that is returned
+ * to the clients so we do not need to make an extra network call for
+ * this information.
+ */
+export const userRole = table(
+  "userRole",
+  {
+    id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
+    ownerId: t
+      .text("owner_id")
+      .references(() => user.id)
+      .notNull(),
+    role: rolesEnum().default("guest").notNull(),
+  },
+  (table) => [t.uniqueIndex("userRole_owner_id_idx").on(table.ownerId)],
+);
 
 export const feed = table(
   "feed",
