@@ -27,6 +27,14 @@ export const auth = betterAuth({
     user: {
       create: {
         after: async (user) => {
+          /**
+           * Technically:
+           * - This insertion could fail and then I'd end up with a user that
+           *   does not have a role. I'm not sure the best path to resolve
+           *   this. I think you'd maybe want to rollback the user creation?
+           *   Or ideally create this role in a transaction with the user
+           *   creation calls?
+           */
           await db.insert(userRole).values({ role: "user", ownerId: user.id });
         },
       },
